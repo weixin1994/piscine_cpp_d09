@@ -9,7 +9,7 @@ class SimplePtr
     public:
         SimplePtr(BaseComponent *rawPtr);
         ~SimplePtr();
-        BaseComponent *get();
+        BaseComponent *get() const;
 
     private:
         BaseComponent *_rawPtr;
