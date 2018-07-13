@@ -1,25 +1,19 @@
-#ifndef _ERRORS_HPP_
-#define _ERRORS_HPP_
+#ifndef ERRORS_HPP_
+#define ERRORS_HPP_
 
+#include <stdexcept>
 #include <string>
 
-class NasaError
+class NasaError : public std::exception 
 {
 	public:
 		NasaError(std::string const &message, std::string const &component = "Unknown");
-		virtual ~NasaError();
-		virtual std::string const &getComponent() const;
-		virtual char const *what() const;
-		
+		std::string const &getComponent() const;
+		const char *what() const noexcept;
+
 	private:
 		std::string _message;
 		std::string _component;
-};
-
-class MissionCriticalError : public NasaError 
-{
-	public:
-		MissionCriticalError(std::string const &message, std::string const &component = "Unknown");
 };
 
 class LifeCriticalError : public NasaError 
@@ -28,10 +22,10 @@ class LifeCriticalError : public NasaError
 		LifeCriticalError(std::string const &message, std::string const &component = "Unknown");
 };
 
-class UserError : public NasaError 
+class MissionCriticalError : public NasaError 
 {
 	public:
-		UserError(std::string const &message, std::string const &component = "Unknown");
+		MissionCriticalError(std::string const &message, std::string const &component = "Unknown");
 };
 
 class CommunicationError : public NasaError 
@@ -40,4 +34,10 @@ class CommunicationError : public NasaError
 		CommunicationError(std::string const &message);
 };
 
-#endif
+class UserError : public NasaError 
+{
+	public:
+		UserError(std::string const &message, std::string const &component = "Unknown");
+};
+
+#endif 
